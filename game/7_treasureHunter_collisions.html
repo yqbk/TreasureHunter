@@ -65,10 +65,10 @@ function setup() {
   gameScene.addChild(treasure);
 
   //Make the blobs
-  var numberOfBlobs = 6,
+  var numberOfBlobs = 12,
       spacing = 48,
       xOffset = 150,
-      speed = 2,
+      speed = 3,
       direction = 1;
 
   //An array to store all the blob monsters
@@ -97,6 +97,7 @@ function setup() {
     //move up. Multiplying `direction` by `speed` determines the blob's
     //vertical direction
     blob.vy = speed * direction;
+    blob.vx = speed * direction;
 
     //Reverse the direction for the next blob
     direction *= -1;
@@ -240,6 +241,8 @@ function play() {
 
     //Move the blob
     blob.y += blob.vy;
+    blob.x += blob.vx;
+
 
     //Check the blob's screen boundaries
     var blobHitsWall = contain(blob, {x: 28, y: 10, width: 488, height: 480});
@@ -248,6 +251,10 @@ function play() {
     //its direction
     if (blobHitsWall === "top" || blobHitsWall === "bottom") {
       blob.vy *= -1;
+    }
+
+    if (blobHitsWall === "left" || blobHitsWall === "right") {
+      blob.vx *= -1;
     }
 
     //Test for a collision. If any of the enemies are touching
